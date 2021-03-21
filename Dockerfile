@@ -1,5 +1,9 @@
-FROM alpine/git
+FROM alpine:3.12
+
+RUN apk --update add curl less python3 git openssl && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm /var/cache/apk/*
+
 COPY . /app
-RUN curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh > miniconda.sh
-RUN bash miniconda.sh -b -p /conda
-CMD /conda/bin/python /app/updater.py
+
+CMD python3 /app/updater.py
